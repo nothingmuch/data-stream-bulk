@@ -7,6 +7,10 @@ use namespace::clean -except => 'meta';
 
 with qw(Data::Stream::Bulk);
 
+sub items { return () }
+
+sub all { return () }
+
 sub next { undef }
 
 sub is_done { 1 }
@@ -49,6 +53,12 @@ Always returns true.
 =item next
 
 Always returns undef.
+
+=item items
+
+=item all
+
+Always returns the empty list.
 
 =item list_cat
 
