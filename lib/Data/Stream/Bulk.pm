@@ -53,8 +53,9 @@ Data::Stream::Bulk - N at a time iteration api
 This module tries to find middle ground between one at a time and all at once
 processing of data sets.
 
-The purpose of this module is to avoid the overhead of one by one iteration
-when this isn't necessary.
+The purpose of this module is to avoid the overhead of implementing an
+iterative api when this isn't necessary, without breaking forward
+compatibility in case that becomes necessary later on.
 
 The API optimizes for when a data set typically fits in memory and is returned
 as an array, but the consumer cannot assume that the data set is bounded.
