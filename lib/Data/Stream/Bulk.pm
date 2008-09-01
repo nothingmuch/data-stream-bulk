@@ -56,6 +56,8 @@ sub list_cat {
 	return ( $self, $head->list_cat(@tail) );
 }
 
+sub loaded { 0 }
+
 # load it *after* the entire role is defined
 require Data::Stream::Bulk::Cat;
 require Data::Stream::Bulk::Nil;
@@ -156,6 +158,19 @@ Used by C<cat>.
 
 Overridden by L<Data::Stream::Bulk::Array>, L<Data::Stream::Bulk::Cat> and
 L<Data::Stream::Bulk::Nil> to implement some simple short circuiting.
+
+=item loaded
+
+Should be overridden to return true if all the items are already realized (e.g.
+in the case of L<Data::Stream::Bulk::Array>).
+
+Returns false by default.
+
+When true calling C<all> is supposed to be safe (memory usage should be in the
+same order of magnitude as stream's own usage).
+
+This is typically useful when tranforming an array is easier than transorming a
+stream (e.g. optional duplicate filtering).
 
 =back
 

@@ -18,6 +18,8 @@ use ok 'Data::Stream::Bulk::Util' => qw(bulk nil cat);
 
 	isa_ok( nil, "Data::Stream::Bulk::Nil", "nil() helper" );
 
+	ok( nil->loaded, "nil is realized" );
+
 	isa_ok( bulk(), "Data::Stream::Bulk::Nil", "bulk() helper with no items" );
 
 	isa_ok( nil->cat(nil), "Data::Stream::Bulk::Nil", "cating nil with nil results in nil" );
@@ -32,6 +34,8 @@ use ok 'Data::Stream::Bulk::Util' => qw(bulk nil cat);
 	my @array = qw(foo bar gorch baz);
 
 	my $d = Data::Stream::Bulk::Array->new( array => \@array );
+
+	ok( $d->loaded, "array is realized" );
 
 	ok( !$d->is_done, "not done" );
 
@@ -94,6 +98,8 @@ use ok 'Data::Stream::Bulk::Util' => qw(bulk nil cat);
 
 	my $d = Data::Stream::Bulk::Callback->new( callback => $cb );
 
+	ok( !$d->loaded, "callback is not realized" );
+
 	is_deeply( [ $d->all ], \@copy, "all method" );
 
 	ok( $d->is_done, "done" );
@@ -129,6 +135,8 @@ use ok 'Data::Stream::Bulk::Util' => qw(bulk nil cat);
 	my $d = nil->cat(bulk(qw(gorch baz))->cat(Data::Stream::Bulk::Callback->new( callback => $cb )->cat(bulk(qw(oi))->cat(nil->cat(bulk("vey"))))->cat(nil))->cat(nil))->cat(nil)->cat(Data::Stream::Bulk::Callback->new( callback => $cb )->cat(bulk(qw(last))));
 
 	isa_ok( $d, "Data::Stream::Bulk::Cat" );
+
+	ok( !$d->loaded, "concatenation is not realized" );
 
 	is_deeply(
 		[ map { ref } @{ $d->streams } ],

@@ -54,6 +54,8 @@ sub list_cat {
 	}
 }
 
+sub loaded { 1 }
+
 __PACKAGE__->meta->make_immutable;
 
 __PACKAGE__
@@ -105,6 +107,10 @@ Returns true if C<next> has been called.
 =item list_cat
 
 Squishes adjacent arrays into a new array.
+
+=item loaded
+
+Returns true
 
 =back
 
