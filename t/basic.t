@@ -17,6 +17,8 @@ use ok 'Data::Stream::Bulk::Util' => qw(bulk nil);
 	ok( !$d->next, "no next block" );
 
 	isa_ok( nil, "Data::Stream::Bulk::Nil", "nil() helper" );
+
+	isa_ok( bulk(), "Data::Stream::Bulk::Nil", "bulk() helper with no items" );
 }
 
 {

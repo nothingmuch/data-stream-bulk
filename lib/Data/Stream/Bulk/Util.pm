@@ -14,7 +14,7 @@ use Sub::Exporter -setup => {
 
 sub nil () { Data::Stream::Bulk::Nil->new }
 
-sub bulk (@) { Data::Stream::Bulk::Array->new( array => [ @_ ] ) }
+sub bulk (@) { return @_ ? Data::Stream::Bulk::Array->new( array => [ @_ ] ) : nil }
 
 __PACKAGE__
 
