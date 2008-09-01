@@ -31,6 +31,29 @@ sub next {
 	}
 }
 
+# squish several arrays into one
+sub list_cat {
+	my ( $self, @rest ) = @_;
+
+	return $self unless @rest;
+
+	my @arrays = ( $self );
+
+	# fetch all adjacent arrays
+	push @arrays, shift @rest while @rest and $rest[0]->isa(__PACKAGE__);
+
+	if ( @arrays > 1 ) {
+		my @cat;
+		push @cat, @$_ for map { $_->_array } @arrays;
+		return __PACKAGE__->new(
+			array => \@cat,
+		)->cat( @rest );
+	} else {
+		my $head = shift @rest;
+		return ( $self, $head->list_cat(@rest) );
+	}
+}
+
 __PACKAGE__->meta->make_immutable;
 
 __PACKAGE__
@@ -78,6 +101,10 @@ Returns the array reference on the first invocation, and nothing thereafter.
 =item is_done
 
 Returns true if C<next> has been called.
+
+=item list_cat
+
+Squishes adjacent arrays into a new array.
 
 =back
 

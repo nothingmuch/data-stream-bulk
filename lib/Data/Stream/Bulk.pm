@@ -31,6 +31,34 @@ sub all {
 	return @ret;
 }
 
+sub cat {
+	my ( $self, @streams ) = @_;
+
+	return $self unless @streams;
+
+	my @cat = $self->list_cat(@streams);
+
+	unless ( @cat ) {
+		return Data::Stream::Bulk::Nil->new;
+	} elsif ( @cat == 1 ) {
+		return $cat[0];
+	} else {
+		return Data::Stream::Bulk::Cat->new(
+			streams => \@cat,
+		);
+	}
+}
+
+sub list_cat {
+	my ( $self, $head, @tail ) = @_;
+
+	return $self unless $head;
+	return ( $self, $head->list_cat(@tail) );
+}
+
+# load it *after* the entire role is defined
+require Data::Stream::Bulk::Cat;
+
 __PACKAGE__
 
 __END__
@@ -114,6 +142,19 @@ Force evaluation of the entire resultset.
 
 Note that for large data sets this might cause swap thrashing of various other
 undesired effects. Use with caution.
+
+=item cat @streams
+
+Concatenates this stream with @streams, returning a single stream.
+
+=item list_cat @tail
+
+Returns a possibly cleaned up list of streams.
+
+Used by C<cat>.
+
+Overridden by L<Data::Stream::Bulk::Array>, L<Data::Stream::Bulk::Cat> and
+L<Data::Stream::Bulk::Nil> to implement some simple short circuiting.
 
 =back
 

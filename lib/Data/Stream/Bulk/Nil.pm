@@ -11,6 +11,13 @@ sub next { undef }
 
 sub is_done { 1 }
 
+sub list_cat {
+	my ( $self, $head, @rest ) = @_;
+
+	return () unless $head;
+	return $head->list_cat(@rest);
+}
+
 __PACKAGE__->meta->make_immutable;
 
 __PACKAGE__
@@ -42,6 +49,10 @@ Always returns true.
 =item next
 
 Always returns undef.
+
+=item list_cat
+
+Skips $self
 
 =back
 
