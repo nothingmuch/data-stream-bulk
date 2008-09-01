@@ -8,7 +8,7 @@ use Test::More 'no_plan';
 use ok 'Data::Stream::Bulk::Nil';
 use ok 'Data::Stream::Bulk::Array';
 use ok 'Data::Stream::Bulk::Callback';
-use ok 'Data::Stream::Bulk::Util' => qw(bulk nil);
+use ok 'Data::Stream::Bulk::Util' => qw(bulk nil cat);
 
 {
 	my $d = Data::Stream::Bulk::Nil->new;
@@ -21,6 +21,11 @@ use ok 'Data::Stream::Bulk::Util' => qw(bulk nil);
 	isa_ok( bulk(), "Data::Stream::Bulk::Nil", "bulk() helper with no items" );
 
 	isa_ok( nil->cat(nil), "Data::Stream::Bulk::Nil", "cating nil with nil results in nil" );
+
+	isa_ok( cat(), "Data::Stream::Bulk::Nil", "cat with no args returns nil" );
+
+	isa_ok( cat(nil), "Data::Stream::Bulk::Nil", "cat of nil is nil" );
+	isa_ok( cat(nil, nil, nil, nil), "Data::Stream::Bulk::Nil", "cat of several nil is nil" );
 }
 
 {
@@ -45,6 +50,8 @@ use ok 'Data::Stream::Bulk::Util' => qw(bulk nil);
 	isa_ok( $cat, "Data::Stream::Bulk::Array", "Array cat Array resuls in Array" );
 
 	is_deeply( $cat->next, \@array, "concatenated array into one block" );
+
+	is_deeply( [ cat(bulk(qw(foo bar)), bulk(qw(gorch baz)))->all ], \@array, "cat helper function" );
 }
 
 {

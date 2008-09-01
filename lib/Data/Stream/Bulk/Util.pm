@@ -11,12 +11,14 @@ use Data::Stream::Bulk::Array;
 use namespace::clean;
 
 use Sub::Exporter -setup => {
-	exports => [qw(nil bulk)],
+	exports => [qw(nil bulk cat)],
 };
 
 sub nil () { Data::Stream::Bulk::Nil->new }
 
 sub bulk (@) { return @_ ? Data::Stream::Bulk::Array->new( array => [ @_ ] ) : nil }
+
+sub cat (@) { return @_ ? shift->cat(@_) : nil }
 
 __PACKAGE__
 
@@ -60,6 +62,12 @@ Takes no arguments.
 =item bulk @items
 
 Creates a new L<Data::Stream::Bulk::Array> wrapping C<@items>.
+
+=item cat @streams
+
+Concatenate several streams together.
+
+Returns C<nil> if no arguments are provided.
 
 =back
 
