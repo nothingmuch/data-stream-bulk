@@ -8,6 +8,8 @@ use warnings;
 use Data::Stream::Bulk::Nil;
 use Data::Stream::Bulk::Array;
 
+use namespace::clean;
+
 use Sub::Exporter -setup => {
 	exports => [qw(nil bulk)],
 };
