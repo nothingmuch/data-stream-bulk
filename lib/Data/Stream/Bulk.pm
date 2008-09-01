@@ -58,6 +58,7 @@ sub list_cat {
 
 # load it *after* the entire role is defined
 require Data::Stream::Bulk::Cat;
+require Data::Stream::Bulk::Nil;
 
 __PACKAGE__
 
