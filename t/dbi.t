@@ -1,0 +1,53 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use Test::More;
+
+our $dbh;
+
+BEGIN {
+	plan skip_all => $@ unless eval { 
+		require DBI;
+		$dbh = DBI->connect( 'DBI:Mock:', '', '' )
+			|| die "Cannot create handle: $DBI::errstr\n"
+	};
+
+	plan 'no_plan';
+}
+
+use ok 'Data::Stream::Bulk::DBI';
+
+my @data = (
+	[ qw(col1 col2 col3) ],
+	[ qw(foo bar gorch) ],
+	[ qw(zot oi lalala) ],
+	[ qw(those meddling kids) ],
+);
+
+$dbh->{mock_add_resultset} = [ @data ];
+
+my $sth = $dbh->prepare("SELECT * FROM foo;");
+
+$sth->execute;
+
+my $d = Data::Stream::Bulk::DBI->new(
+	sth => $sth,
+	max_rows => 2,
+);
+
+ok( !$d->is_done, "not yet done" );
+
+is_deeply( $d->next, [ @data[1,2] ], "two rows" );
+
+ok( !$d->is_done, "not yet done" );
+
+is_deeply( [ $d->items ], [ $data[3] ], "one more" );
+
+ok( !$d->is_done, "not yet done" );
+
+is_deeply( [ $d->items ], [ ], "no more" );
+
+ok( $d->is_done, "now we're done" );
+
