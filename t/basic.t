@@ -8,12 +8,15 @@ use Test::More 'no_plan';
 use ok 'Data::Stream::Bulk::Nil';
 use ok 'Data::Stream::Bulk::Array';
 use ok 'Data::Stream::Bulk::Callback';
+use ok 'Data::Stream::Bulk::Util' => qw(bulk nil);
 
 {
 	my $d = Data::Stream::Bulk::Nil->new;
 
 	ok( $d->is_done, "Nil is always done" );
 	ok( !$d->next, "no next block" );
+
+	isa_ok( nil, "Data::Stream::Bulk::Nil", "nil() helper" );
 }
 
 {
@@ -28,6 +31,8 @@ use ok 'Data::Stream::Bulk::Callback';
 	ok( $d->is_done, "now it's done" );
 
 	ok( !$d->next, "no next block" );
+
+	is_deeply( bulk(@array)->next, \@array, "bulk() helper" );
 }
 
 {
