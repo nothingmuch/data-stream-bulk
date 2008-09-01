@@ -69,3 +69,15 @@ use ok 'Data::Stream::Bulk::Util' => qw(bulk nil);
 
 	ok( !$d->next, "no next" );
 }
+
+{
+	my @copy = my @array = qw(foo bar gorch);
+
+	my $cb = sub { @array && [ shift @array ] };
+
+	my $d = Data::Stream::Bulk::Callback->new( callback => $cb );
+
+	is_deeply( [ $d->all ], \@copy, "all method" );
+
+	ok( $d->is_done, "done" );
+}

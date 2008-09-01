@@ -19,6 +19,18 @@ sub items {
 	}
 }
 
+sub all {
+	my $self = shift;
+
+	my @ret;
+
+	while ( my $next = $self->next ) {
+		push @ret, @$next;
+	}
+
+	return @ret;
+}
+
 __PACKAGE__
 
 __END__
@@ -95,6 +107,13 @@ C<is_done> returned false prior to calling it.
 
 This method calls C<next> and dereferences the result if there are pending
 items.
+
+=item all
+
+Force evaluation of the entire resultset.
+
+Note that for large data sets this might cause swap thrashing of various other
+undesired effects. Use with caution.
 
 =back
 
