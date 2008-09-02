@@ -80,7 +80,7 @@ __END__
 
 =head1 NAME
 
-Data::Stream::Bulk - N at a time iteration api
+Data::Stream::Bulk - N at a time iteration API
 
 =head1 SYNOPSIS
 
@@ -219,9 +219,29 @@ L<DBIx::Class::ResultSet> iteration.
 
 An empty result set.
 
-=back
+=item L<Data::Stream::Bulk::Cat>
+
+A concatenation of several streams.
+
+=item L<Data::Stream::Bulk::Filter>
+
+A filter wrapping a stream.
 
 =back
+
+=head1 SEE ALSO
+
+L<HOP::Stream>, L<Iterator>, L<Class::Iterator> etc for one by one iteration
+
+L<DBI>, L<DBIx::Class::ResultSet>
+
+L<POE::Filter>
+
+L<Data::Page>
+
+L<Parallel::Iterator>
+
+L<http://en.wikipedia.org/wiki/MapReduce>, LISP, and all that other kool aid
 
 =head1 VERSION CONTROL
 
