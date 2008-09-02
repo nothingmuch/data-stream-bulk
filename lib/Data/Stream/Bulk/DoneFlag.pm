@@ -14,10 +14,16 @@ has done => (
 	isa => "Bool",
 	init_arg => undef,
 	reader => "is_done",
-	writer => "_set_done",
+	writer => "_done",
 );
 
 sub finished {}
+
+sub _set_done {
+	my $self = shift;
+	$self->_done(1);
+	$self->finished;
+}
 
 sub next {
 	my $self = shift;
@@ -26,8 +32,7 @@ sub next {
 		if ( my $more = $self->get_more ) {
 			return $more;
 		} else {
-			$self->_set_done(1);
-			$self->finished;
+			$self->_set_done;
 			return;
 		}
 	} else {
