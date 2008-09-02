@@ -243,6 +243,29 @@ L<Parallel::Iterator>
 
 L<http://en.wikipedia.org/wiki/MapReduce>, LISP, and all that other kool aid
 
+=head1 TODO
+
+=over 4
+
+=item Sorted streams
+
+Add a hint for sorted streams (like C<loaded> but as an attribute in the base
+role).
+
+Introduce a C<merge> operation for merging of sorted streams.
+
+Optimize C<unique> to make use of sorting hints for constant space uniquing.
+
+=item More utility functions
+
+To assist in proccessing and creating streams.
+
+=item Coercion tables
+
+L<Moose::Util::TypeConstraints>
+
+=back
+
 =head1 VERSION CONTROL
 
 This module is maintained using Darcs. You can get the latest version from
