@@ -231,10 +231,11 @@ use ok 'Data::Stream::Bulk::Util' => qw(bulk nil cat filter unique);
 }
 
 {
-	my $a = unique(bulk(qw(foo bar foo bar bar)));
+	my ( $foo, $bar, $gorch ) = ( [], {}, "gorch" );
+	my $a = unique(bulk($foo, $bar, $foo, $foo, $gorch, $bar));
 
 	isa_ok( $a, "Data::Stream::Bulk::Array", "unique on array returns array" );
 
-	is_deeply([ $a->all ], [ qw(foo bar) ], "unique on arrays" );
+	is_deeply([ $a->all ], [ $foo, $bar, $gorch ], "unique with refs" );
 }
 
