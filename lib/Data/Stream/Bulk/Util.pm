@@ -40,7 +40,7 @@ __END__
 
 =head1 NAME
 
-Data::Stream::Bulk::Util - Utility functions for L<Data::Stream::Bulk::Util>
+Data::Stream::Bulk::Util - Utility functions for L<Data::Stream::Bulk>
 
 =head1 SYNOPSIS
 
