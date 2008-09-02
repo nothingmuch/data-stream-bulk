@@ -30,6 +30,16 @@ sub get_more {
 	$self->fetchall_arrayref( $self->slice, $self->max_rows );
 }
 
+sub all {
+	my $self = shift;
+
+	my $all = $self->fetchall_arrayref( $self->slice );
+
+	$self->_set_done;
+
+	return @$all;
+}
+
 __PACKAGE__->meta->make_immutable;
 
 __PACKAGE__
