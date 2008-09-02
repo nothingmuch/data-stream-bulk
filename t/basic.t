@@ -28,6 +28,11 @@ use ok 'Data::Stream::Bulk::Util' => qw(bulk nil cat filter unique);
 
 	isa_ok( cat(nil), "Data::Stream::Bulk::Nil", "cat of nil is nil" );
 	isa_ok( cat(nil, nil, nil, nil), "Data::Stream::Bulk::Nil", "cat of several nil is nil" );
+
+	is_deeply( [ nil->items ], [], "no items" );
+	is_deeply( [ nil->all ], [], "nothing at all" );
+
+	isa_ok( nil->filter(sub {[]}), "Data::Stream::Bulk::Nil" );
 }
 
 {
