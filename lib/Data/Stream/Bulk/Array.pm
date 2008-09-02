@@ -10,6 +10,7 @@ with qw(Data::Stream::Bulk);
 has array => (
 	isa => "ArrayRef",
 	reader  => "_array",
+	writer  => "_set_array",
 	clearer => "_clear_array",
 	predicate => "_has_array",
 	required => 1,
@@ -52,6 +53,13 @@ sub list_cat {
 		my $head = shift @rest;
 		return ( $self, $head->list_cat(@rest) );
 	}
+}
+
+sub filter {
+	my ( $self, $filter ) = @_;
+	local $_ = $self->next;
+	$self->_set_array( $filter->($_) );
+	return $self;
 }
 
 sub loaded { 1 }
@@ -107,6 +115,10 @@ Returns true if C<next> has been called.
 =item list_cat
 
 Squishes adjacent arrays into a new array.
+
+=item filter $filter
+
+Immediately applies C<$filter> to the internal array and returns C<$self>.
 
 =item loaded
 

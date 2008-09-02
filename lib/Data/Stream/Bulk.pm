@@ -56,11 +56,21 @@ sub list_cat {
 	return ( $self, $head->list_cat(@tail) );
 }
 
+sub filter {
+	my ( $self, $filter ) = @_;
+
+	return Data::Stream::Bulk::Filter->new(
+		filter => $filter,
+		stream => $self,
+	);
+}
+
 sub loaded { 0 }
 
 # load it *after* the entire role is defined
 require Data::Stream::Bulk::Cat;
 require Data::Stream::Bulk::Nil;
+require Data::Stream::Bulk::Filter;
 
 __PACKAGE__
 
@@ -158,6 +168,15 @@ Used by C<cat>.
 
 Overridden by L<Data::Stream::Bulk::Array>, L<Data::Stream::Bulk::Cat> and
 L<Data::Stream::Bulk::Nil> to implement some simple short circuiting.
+
+=item filter $filter
+
+Applies a per-block block filter to the stream.
+
+Returns a possibly new stream with the filtering layered.
+
+C<$filter> is invoked once per block and should return an array reference to
+the filtered block.
 
 =item loaded
 

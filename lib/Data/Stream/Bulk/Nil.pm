@@ -22,6 +22,8 @@ sub list_cat {
 	return $head->list_cat(@rest);
 }
 
+sub filter { return $_[0] };
+
 sub loaded { 1 }
 
 __PACKAGE__->meta->make_immutable;
@@ -65,6 +67,10 @@ Always returns the empty list.
 =item list_cat
 
 Skips $self
+
+=item filter
+
+Returns $self
 
 =item loaded
 

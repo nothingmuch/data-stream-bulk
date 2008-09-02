@@ -11,7 +11,7 @@ use Data::Stream::Bulk::Array;
 use namespace::clean;
 
 use Sub::Exporter -setup => {
-	exports => [qw(nil bulk cat)],
+	exports => [qw(nil bulk cat filter)],
 };
 
 sub nil () { Data::Stream::Bulk::Nil->new }
@@ -19,6 +19,11 @@ sub nil () { Data::Stream::Bulk::Nil->new }
 sub bulk (@) { return @_ ? Data::Stream::Bulk::Array->new( array => [ @_ ] ) : nil }
 
 sub cat (@) { return @_ ? shift->cat(@_) : nil }
+
+sub filter (&$) {
+	my ( $filter, $stream ) = @_;
+	$stream->filter($filter);
+}
 
 __PACKAGE__
 
@@ -68,6 +73,10 @@ Creates a new L<Data::Stream::Bulk::Array> wrapping C<@items>.
 Concatenate several streams together.
 
 Returns C<nil> if no arguments are provided.
+
+=item filter { ... } $stream
+
+Calls C<filter> on $stream with the provided filter.
 
 =back
 

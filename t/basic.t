@@ -8,7 +8,7 @@ use Test::More 'no_plan';
 use ok 'Data::Stream::Bulk::Nil';
 use ok 'Data::Stream::Bulk::Array';
 use ok 'Data::Stream::Bulk::Callback';
-use ok 'Data::Stream::Bulk::Util' => qw(bulk nil cat);
+use ok 'Data::Stream::Bulk::Util' => qw(bulk nil cat filter);
 
 {
 	my $d = Data::Stream::Bulk::Nil->new;
@@ -173,3 +173,40 @@ use ok 'Data::Stream::Bulk::Util' => qw(bulk nil cat);
 		"no streams in concatenated",
 	);
 }
+
+{
+	my $d = filter { [ grep { /o/ } @$_ ] } bulk(qw(foo bar gorch baz));
+
+	isa_ok( $d, "Data::Stream::Bulk::Array" );
+
+	ok( !$d->is_done, "not done" );
+	is_deeply( [ $d->items ], [ qw(foo gorch) ], "items method" );
+
+	ok( $d->is_done, "done" );
+
+	ok( !$d->next, "no next" );
+}
+
+{
+	my @array = ( [qw(foo bar)], [qw(gorch baz)] );
+
+	my $cb = sub { shift @array };
+
+	my $d = Data::Stream::Bulk::Callback->new( callback => $cb )->filter(sub {
+		return [ grep { /o/ } @$_ ];
+	});
+
+	isa_ok( $d, "Data::Stream::Bulk::Filter" );
+
+	ok( !$d->is_done, "not done" );
+	is_deeply( [ $d->items ], [ "foo" ], "items method" );
+	ok( !$d->is_done, "not done" );
+	is_deeply( [ $d->items ], [ "gorch" ], "items method" );
+	ok( !$d->is_done, "not done" );
+	is_deeply( [ $d->items ], [ ], "items method" );
+
+	ok( $d->is_done, "now it's done" );
+
+	ok( !$d->next, "no next" );
+}
+
