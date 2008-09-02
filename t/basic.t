@@ -8,7 +8,7 @@ use Test::More 'no_plan';
 use ok 'Data::Stream::Bulk::Nil';
 use ok 'Data::Stream::Bulk::Array';
 use ok 'Data::Stream::Bulk::Callback';
-use ok 'Data::Stream::Bulk::Util' => qw(bulk nil cat filter);
+use ok 'Data::Stream::Bulk::Util' => qw(bulk nil cat filter unique);
 
 {
 	my $d = Data::Stream::Bulk::Nil->new;
@@ -208,5 +208,28 @@ use ok 'Data::Stream::Bulk::Util' => qw(bulk nil cat filter);
 	ok( $d->is_done, "now it's done" );
 
 	ok( !$d->next, "no next" );
+}
+
+{
+	my @array = ( [qw(foo bar bar)], [qw(gorch foo baz)] );
+
+	my $cb = sub { shift @array };
+
+	my $d = unique(Data::Stream::Bulk::Callback->new( callback => $cb ));
+
+		ok( !$d->is_done, "not done" );
+	is_deeply( [ $d->items ], [ qw(foo bar) ], "items method" );
+	ok( !$d->is_done, "not done" );
+	is_deeply( [ $d->items ], [ qw(gorch baz) ], "items method" );
+	ok( !$d->is_done, "not done" );
+	is_deeply( [ $d->items ], [ ], "items method" );
+}
+
+{
+	my $a = unique(bulk(qw(foo bar foo bar bar)));
+
+	isa_ok( $a, "Data::Stream::Bulk::Array", "unique on array returns array" );
+
+	is_deeply([ $a->all ], [ qw(foo bar) ], "unique on arrays" );
 }
 
