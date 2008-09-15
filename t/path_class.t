@@ -38,10 +38,7 @@ foreach my $dir ( $dist->subdir("t"), $dist->subdir("lib"), $dist ) {
 			\@all,
 			\@rec,
 			"breadth first traversal order",
-		) || do {
-			warn join("\n", @all, "", "");
-			warn join("\n", @rec, "", "");
-		};
+		);
 	}
 
 	{
