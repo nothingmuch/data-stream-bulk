@@ -162,6 +162,11 @@ Defaults to 250.
 
 Chooses between depth first and breadth first traversal order.
 
+=item only_files
+
+If true only L<Path::Class::File> items will be returned in the output streams
+(no directories).
+
 =head1 METHODS
 
 =over 4
