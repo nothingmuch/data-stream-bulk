@@ -222,7 +222,7 @@ use ok 'Data::Stream::Bulk::Util' => qw(bulk nil cat filter unique);
 
 	my $d = unique(Data::Stream::Bulk::Callback->new( callback => $cb ));
 
-		ok( !$d->is_done, "not done" );
+	ok( !$d->is_done, "not done" );
 	is_deeply( [ $d->items ], [ qw(foo bar) ], "items method" );
 	ok( !$d->is_done, "not done" );
 	is_deeply( [ $d->items ], [ qw(gorch baz) ], "items method" );
