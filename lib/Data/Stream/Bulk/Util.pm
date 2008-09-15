@@ -16,6 +16,7 @@ use Sub::Exporter -setup => {
 	exports => [qw(nil bulk cat filter unique)],
 };
 
+# use constant nil => Data::Stream::Bulk::Nil->new;
 sub nil () { Data::Stream::Bulk::Nil->new }
 
 sub bulk (@) { return @_ ? Data::Stream::Bulk::Array->new( array => [ @_ ] ) : nil }
@@ -89,10 +90,12 @@ Calls C<filter> on $stream with the provided filter.
 
 Filter the stream to remove duplicates.
 
-Note that this may potentially scales to O(k) where k is the number of distinct
-items.
+Note that memory use may potentially scale to O(k) where k is the number of
+distinct items, because this is implemented in terms of a seen hash.
 
 In the future this will be optimized to be iterative for sorted streams.
+
+References are keyed by their refaddr (see L<Hash::Util::FieldHash/id>).
 
 =back
 
