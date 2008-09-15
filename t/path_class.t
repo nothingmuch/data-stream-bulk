@@ -17,7 +17,6 @@ foreach my $dir ( $dist->subdir("t"), $dist->subdir("lib"), $dist ) {
 		my $paths = Data::Stream::Bulk::Path::Class->new(
 			dir => $dir,
 			chunk_size => 2,
-			max_queue => 3,
 			depth_first => 0,
 		);
 
@@ -49,7 +48,6 @@ foreach my $dir ( $dist->subdir("t"), $dist->subdir("lib"), $dist ) {
 		my $paths = Data::Stream::Bulk::Path::Class->new(
 			dir => $dir,
 			chunk_size => 2,
-			max_queue => 3,
 			depth_first => 1,
 		);
 
