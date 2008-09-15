@@ -21,10 +21,10 @@ foreach my $dir ( $dist->subdir("t"), $dist->subdir("lib"), $dist ) {
 			depth_first => 0,
 		);
 
-		my $strings = $paths->filter(sub {[ map { "$_" } @$_ ]});
+		my $strings = $paths->filter(sub {[ grep { !/tmp/ } map { "$_" } @$_ ]});
 
 		my @rec;
-		$dir->recurse( callback => sub { push @rec, "$_[0]" }, depthfirst => 0, preorder => 1 );
+		$dir->recurse( callback => sub { push @rec, "$_[0]" unless $_[0] =~ /tmp/ }, depthfirst => 0, preorder => 1 );
 
 		my @all = $strings->all;
 
@@ -52,10 +52,10 @@ foreach my $dir ( $dist->subdir("t"), $dist->subdir("lib"), $dist ) {
 			depth_first => 1,
 		);
 
-		my $strings = $paths->filter(sub {[ map { "$_" } @$_ ]});
+		my $strings = $paths->filter(sub {[ grep { !/tmp/ } map { "$_" } @$_ ]});
 
 		my @rec;
-		$dir->recurse( callback => sub { push @rec, "$_[0]" }, depthfirst => 1, preorder => 1 );
+		$dir->recurse( callback => sub { push @rec, "$_[0]" unless $_[0] =~ /tmp/ }, depthfirst => 1, preorder => 1 );
 
 		my @all = $strings->all;
 
