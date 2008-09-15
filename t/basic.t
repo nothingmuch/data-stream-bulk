@@ -193,11 +193,13 @@ use ok 'Data::Stream::Bulk::Util' => qw(bulk nil cat filter unique);
 }
 
 {
-	my @array = ( [qw(foo bar)], [qw(gorch baz)] );
+	my @array = ( [qw(foo bar), "", ], [qw(gorch baz)] );
 
 	my $cb = sub { shift @array };
 
 	my $d = Data::Stream::Bulk::Callback->new( callback => $cb )->filter(sub {
+		return [ grep { length } @$_ ];
+	})->filter(sub{
 		return [ grep { /o/ } @$_ ];
 	});
 

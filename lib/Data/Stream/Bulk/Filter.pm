@@ -9,7 +9,7 @@ use namespace::clean -except => 'meta';
 
 has filter => (
 	isa => "CodeRef",
-	is  => "ro",
+	reader => "filter_body",
 	required => 1,
 );
 
@@ -26,7 +26,7 @@ sub next {
 	my $self = shift;
 
 	local $_ = $self->stream->next;
-	return $_ && ( $self->filter->($_) || [] );
+	return $_ && ( $self->filter_body->($_) || [] );
 }
 
 __PACKAGE__->meta->make_immutable;
