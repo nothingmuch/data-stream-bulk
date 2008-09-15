@@ -51,7 +51,7 @@ has _queue => (
 sub is_done {
 	my $self = shift;
 	return (
-		@{ $self->_dh_queue } == 0
+		@{ $self->_stack } == 0
 			and
 		@{ $self->_queue } == 0
 	);

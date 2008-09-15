@@ -26,7 +26,11 @@ foreach my $dir ( $dist->subdir("t"), $dist->subdir("lib"), $dist ) {
 		my @rec;
 		$dir->recurse( callback => sub { push @rec, "$_[0]" unless $_[0] =~ /tmp/ }, depthfirst => 0, preorder => 1 );
 
+		ok( !$_->is_done, "not done" ) for $paths, $strings;
+
 		my @all = $strings->all;
+
+		ok( $_->is_done, "done" ) for $paths, $strings;
 
 		is_deeply(
 			[ sort @all ],
@@ -54,7 +58,11 @@ foreach my $dir ( $dist->subdir("t"), $dist->subdir("lib"), $dist ) {
 		my @rec;
 		$dir->recurse( callback => sub { push @rec, "$_[0]" unless $_[0] =~ /tmp/ }, depthfirst => 1, preorder => 1 );
 
+		ok( !$_->is_done, "not done" ) for $paths, $strings;
+
 		my @all = $strings->all;
+
+		ok( $_->is_done, "done" ) for $paths, $strings;
 
 		is_deeply(
 			[ sort @all ],
