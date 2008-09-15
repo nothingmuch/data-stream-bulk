@@ -10,6 +10,8 @@ our $dbh;
 BEGIN {
 	plan skip_all => $@ unless eval { 
 		require DBI;
+		require DBD::Mock;
+		DBD::Mock->VERSION("1.37");
 		$dbh = DBI->connect( 'DBI:Mock:', '', '' )
 			|| die "Cannot create handle: $DBI::errstr\n"
 	};
