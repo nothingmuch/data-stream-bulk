@@ -3,7 +3,12 @@
 use strict;
 use warnings;
 
-use Test::More 'no_plan';
+use Test::More;
+
+BEGIN {
+	plan skip_all => $@ unless eval { require Path::Class };
+	plan 'no_plan';
+}
 
 use ok 'Data::Stream::Bulk::Path::Class';
 
