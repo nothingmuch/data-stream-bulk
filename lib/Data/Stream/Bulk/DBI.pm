@@ -106,7 +106,7 @@ Calls C<fetchall_arrayref> to get the next chunk of rows.
 =item all
 
 Calls C<fetchall_arrayref> to get the raminder of the data (without specifying
-C<max_rows).
+C<max_rows>).
 
 =back
 
