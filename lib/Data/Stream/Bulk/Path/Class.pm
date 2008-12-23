@@ -4,6 +4,7 @@ package Data::Stream::Bulk::Path::Class;
 use Moose;
 
 use Path::Class;
+use Carp qw(croak);
 
 use namespace::clean -except => 'meta';
 
