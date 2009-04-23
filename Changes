@@ -1,2 +1,5 @@
+0.04
+	- add exclusions to role composition to avoid the new warning
+
 0.03
 	- add Path::Class iterator
