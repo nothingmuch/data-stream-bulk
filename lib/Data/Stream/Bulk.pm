@@ -5,7 +5,7 @@ use Moose::Role;
 
 use namespace::clean -except => 'meta';
 
-our $VERSION = "0.03";
+our $VERSION = "0.04";
 
 requires qw(next is_done);
 
