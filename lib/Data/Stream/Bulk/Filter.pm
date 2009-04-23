@@ -20,7 +20,7 @@ has stream => (
 	handles  => [qw(is_done loaded)],
 );
 
-with qw(Data::Stream::Bulk);
+with qw(Data::Stream::Bulk) => { excludes => 'loaded' };
 
 sub next {
 	my $self = shift;

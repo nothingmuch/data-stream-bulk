@@ -5,7 +5,7 @@ use Moose;
 
 use namespace::clean -except => 'meta';
 
-with qw(Data::Stream::Bulk);
+with qw(Data::Stream::Bulk) => { excludes => 'list_cat' };
 
 has streams => (
 	isa => "ArrayRef[Data::Stream::Bulk]",

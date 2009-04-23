@@ -5,7 +5,7 @@ use Moose;
 
 use namespace::clean -except => 'meta';
 
-with qw(Data::Stream::Bulk);
+with qw(Data::Stream::Bulk) => { excludes => [qw/loaded filter list_cat/] };
 
 has array => (
 	isa => "ArrayRef",
