@@ -1,3 +1,6 @@
+0.05
+	- Silence some new warnings from Moose
+
 0.04
 	- add exclusions to role composition to avoid the new warning
 
