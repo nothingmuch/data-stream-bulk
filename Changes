@@ -1,3 +1,8 @@
+0.06
+    - Fix several pod errors (Closes RT#43490) (Ryan Niebur)
+    - Add pod tests
+    - Update version control notice
+
 0.05
 	- Silence some new warnings from Moose
 
