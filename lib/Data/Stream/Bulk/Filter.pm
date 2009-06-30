@@ -76,6 +76,8 @@ The stream to be filtered
 
 =head1 METHODS
 
+=over 4
+
 =item is_done
 
 =item loaded

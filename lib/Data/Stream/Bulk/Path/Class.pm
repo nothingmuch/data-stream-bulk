@@ -155,6 +155,8 @@ keep track of state.
 
 =head1 ATTRIBUTES
 
+=over 4
+
 =item chunk_size
 
 Defaults to 250.
@@ -167,6 +169,8 @@ Chooses between depth first and breadth first traversal order.
 
 If true only L<Path::Class::File> items will be returned in the output streams
 (no directories).
+
+=back
 
 =head1 METHODS
 
