@@ -5,7 +5,7 @@ use Moose;
 
 use namespace::clean -except => 'meta';
 
-with qw(Data::Stream::Bulk::DoneFlag) => { excludes => 'is_done' };
+with qw(Data::Stream::Bulk::DoneFlag) => { excludes => [qw(is_done finished)] };
 
 has resultset => (
 	isa => "Object",
